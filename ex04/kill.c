@@ -36,6 +36,6 @@ int main(int ac, char const * const *av)
 
     pid_t pid = atoi(av[1]);
 
-    /* Utilisation de kill */
+    kill(pid, SIGKILL);
     return 0;
 }

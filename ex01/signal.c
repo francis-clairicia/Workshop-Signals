@@ -28,10 +28,15 @@ Fonction à utiliser : signal(2)
 */
 
 /* Tu as une fonction à créer ici. */
+void sigint_handler(int signum)
+{
+    GLOBAL_LOOP = false;
+}
 
 int main(void)
 {
     /* Utilisation de signal */
+    signal(SIGINT, &sigint_handler);
 
     GLOBAL_LOOP = true;
     while (GLOBAL_LOOP == true) {

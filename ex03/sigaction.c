@@ -42,6 +42,11 @@ Là ta fonction doit prendre 3 arguments:
     2) Une structure un peu particulière
     3) Un pointeur qui ne nous sera pas utile
 */
+void sigint_handler(int sig, siginfo_t *info, void *ucontext)
+{
+    printf("%d\n", info->si_pid);
+    GLOBAL_LOOP = false;
+}
 
 int main(void)
 {
@@ -55,9 +60,10 @@ int main(void)
     /* Tu comprends bien que ce ne sera pas le même prototype de fonction */
     /* Mais alors c'est quoi ? */
     /* (Oui j'l'ai déjà un peu spoil mais c'était si évident ? :) ) */
-    action.sa_sigaction =  /* Something */;
+    action.sa_sigaction = sigint_handler;
 
     /* Utilisation de sigaction */
+    sigaction(SIGINT, &action, NULL);
 
     GLOBAL_LOOP = true;
     while (GLOBAL_LOOP == true) {

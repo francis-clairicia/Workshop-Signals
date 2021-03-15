@@ -58,21 +58,48 @@ unsigned int get_number_from_process(void)
 {
     unsigned int nb = 0;
 
-    /* Utilisation de pause() */
+    GLOBAL_SIGNUM = 0;
+    while (GLOBAL_SIGNUM != SIGUSR2) {
+        pause();
+        if (GLOBAL_SIGNUM == SIGUSR1)
+            nb += 1;
+    }
     return nb;
 }
 
 void send_number_to_process(pid_t recieving_pid, unsigned int nb)
 {
-    /* Utilisation de kill() */
+    unsigned int index = 0;
+
+    while (index < nb) {
+        kill(recieving_pid, SIGUSR1);
+        usleep(1000);
+        ++index;
+    }
+    kill(recieving_pid, SIGUSR2);
 }
 
 /* Ta fonction handler avec sigaction comme d'habitude */
+void sigint_handler(int signum)
+{
+    GLOBAL_SIGNUM = signum;
+}
 
 int main(int ac, char const * const *av)
 {
     /* Utilisation de sigaction sur SIGUSR1 et SIGUSR2 */
     /* Là tu sais faire maintenant ! Ou au pire CTRL+C/CTRL+V */
+
+    struct sigaction action;
+
+    action.sa_flags = 0;          // Pas de flags en particulier
+    sigemptyset(&action.sa_mask); // Pas de masque à appliquer aux signaux
+
+    action.sa_handler = sigint_handler;
+
+    /* Utilisation de sigaction */
+    sigaction(SIGUSR1, &action, NULL);
+    sigaction(SIGUSR2, &action, NULL);
 
     if (ac == 1) {
         /* Il sera le receveur */

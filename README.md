@@ -33,7 +33,7 @@ Les fonctions à connaître :
 - [signal(2)](https://man7.org/linux/man-pages/man2/signal.2.html)/[sigaction(2)](https://man7.org/linux/man-pages/man2/sigaction.2.html): Modifie le comportement d'un programme à la réception d'un signal
 - [kill(2)](https://man7.org/linux/man-pages/man2/kill.2.html): Envoie un signal un processus spécifique
 - [raise(3)](https://man7.org/linux/man-pages/man3/raise.3.html): Envoie un signal à son propre processus (`kill(getpid())`)
-- [pause(2)](https://man7.org/linux/man-pages/man2/pause.2.html): Attends qu'un signal soit reçu
+- [pause(2)](https://man7.org/linux/man-pages/man2/pause.2.html): Attend qu'un signal soit reçu
 
 En bonus:
 - [abort(3)](https://man7.org/linux/man-pages/man3/abort.3.html): Envoie `SIGABRT` à son propre processus, et stoppe obligatoirement le processus
